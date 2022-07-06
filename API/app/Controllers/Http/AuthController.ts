@@ -14,7 +14,7 @@ export default class AuthController {
 
 			return response.ok({ admin, token });
 		} catch {
-			return response.unauthorized({ message: 'Credenciais inválidas! '});
+			return response.unauthorized({ message: 'Credenciais inválidas!'});
 		}
 	}
 
