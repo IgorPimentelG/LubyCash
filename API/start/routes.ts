@@ -19,3 +19,4 @@
 */
 
 import 'App/modules/auth/routes';
+import 'App/modules/admin/routes';
