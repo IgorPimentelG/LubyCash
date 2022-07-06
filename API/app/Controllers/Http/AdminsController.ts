@@ -22,6 +22,10 @@ export default class AdminsController {
 
 			await bouncer.authorize('owner', admin);
 
+			if (!full_name && !password) {
+				return response.badRequest({ message: 'Informe os dados a serem atualizados!' });
+			}
+
 			if (full_name) admin.fullName = full_name;
 			if (password) admin.password = password;
 
