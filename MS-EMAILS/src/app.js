@@ -3,7 +3,7 @@ const nodemailer = require('nodemailer');
 const configEmail = require('./mail');
 const consumer = require('./kafka');
 
-const port = 3000;
+const PORT = 3001;
 
 async function run() {
 	await consumer.connect();
@@ -26,5 +26,5 @@ async function sendEmail(to, subject, text) {
 	});
 }
 
-app.listen(port);
+app.listen(PORT);
 run();
