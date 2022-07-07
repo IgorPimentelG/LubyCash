@@ -1,5 +1,48 @@
 version: "2"
 services:
+  api:
+    container_name: 'API'
+    build: ./API
+    command: npm run dev
+    ports:
+      - '3333:3333'
+    volumes:
+      - .:/app/api
+    depends_on:
+      - mysql
+  
+  ms_emails: 
+    container_name: 'MS-EMAILS'
+    build: ./MS-EMAILS
+    command: npm run dev
+    ports:
+      - '3001:3001'
+    volumes:
+      - .:/app/ms_emails
+    
+  ms_client_review:
+    container_name: 'MS-CLIENT-REVIEW'
+    build: ./MS-CLIENT-REVIEW
+    command: npm run dev
+    ports:
+      - '3002:3002'
+    volumes:
+      - .:/app/ms_client_review
+    depends_on:
+      - mysql
+
+  mysql: 
+    container_name: 'MYSQL'
+    image: mysql:5.7.31
+    command: --default-authentication-plugin=mysql_native_password --sql_mode=NO_ENGINE_SUBSTITUTION,NO_AUTO_CREATE_USER --explicit_defaults_for_timestamp
+    restart: always
+    ports:
+      - '3308:3306'
+    environment:
+      - MYSQL_ROOT_PASSWORD=admin
+      - MYSQL_DATABASE=db_lubycash
+      - TZ=America/Sao_Paulo
+
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
     environment:
@@ -7,23 +50,6 @@ services:
       ZOOKEEPER_TICK_TIME: 2000
 
   kafka:
-    # "`-._,-'"`-._,-'"`-._,-'"`-._,-'"`-._,-'"`-._,-'"`-._,-'"`-._,-'"`-._,-
-    # An important note about accessing Kafka from clients on other machines:
-    # -----------------------------------------------------------------------
-    #
-    # The config used here exposes port 9092 for _external_ connections to the broker
-    # i.e. those from _outside_ the docker network. This could be from the host machine
-    # running docker, or maybe further afield if you've got a more complicated setup.
-    # If the latter is true, you will need to change the value 'localhost' in
-    # KAFKA_ADVERTISED_LISTENERS to one that is resolvable to the docker host from those
-    # remote clients
-    #
-    # For connections _internal_ to the docker network, such as from other services
-    # and components, use kafka:29092.
-    #
-    # See https://rmoff.net/2018/08/02/kafka-listeners-explained/ for details
-    # "`-._,-'"`-._,-'"`-._,-'"`-._,-'"`-._,-'"`-._,-'"`-._,-'"`-._,-'"`-._,-
-    #
     image: confluentinc/cp-kafka:latest
     depends_on:
       - zookeeper
