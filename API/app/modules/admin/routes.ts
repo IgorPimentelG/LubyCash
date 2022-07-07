@@ -7,4 +7,6 @@ Route.group(() => {
 		Route.get('/list', 'AdminsController.show');
 		Route.delete('/delete/:uuid', 'AdminsController.destroy');
 	}).prefix('/v1/admin');
-}).prefix('/api').middleware('auth');
+})
+	.prefix('/api')
+	.middleware(['auth', 'adminOnly']);
