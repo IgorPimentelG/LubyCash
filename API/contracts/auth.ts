@@ -5,7 +5,8 @@
  * file.
  */
 
-import Admin from 'App/Models/Admin'
+import Admin from 'App/Models/Admin';
+import Client from 'App/Models/Client';
 
 declare module '@ioc:Adonis/Addons/Auth' {
   /*
@@ -33,9 +34,14 @@ declare module '@ioc:Adonis/Addons/Auth' {
     | different Lucid models.
     |
     */
-    user: {
+    admin: {
       implementation: LucidProviderContract<typeof Admin>
       config: LucidProviderConfig<typeof Admin>
+    },
+
+    client: {
+      implementation: LucidProviderContract<typeof Client>
+      config: LucidProviderConfig<typeof Client>
     }
   }
 
@@ -64,9 +70,15 @@ declare module '@ioc:Adonis/Addons/Auth' {
     | to authenticate requests.
     |
     */
-    api: {
-      implementation: OATGuardContract<'user', 'api'>
-      config: OATGuardConfig<'user'>
-    }
+    admin_api: {
+      implementation: OATGuardContract<'admin', 'admin_api'>
+      config: OATGuardConfig<'admin'>
+    },
+
+    client_api: {
+      implementation: OATGuardContract<'client', 'client_api'>
+      config: OATGuardConfig<'client'>
+    },
+
   }
 }
