@@ -6,10 +6,9 @@ services:
     command: npm run dev
     ports:
       - '3333:3333'
-    volumes:
-      - .:/app/api
     depends_on:
       - mysql
+      - kafka
   
   ms_emails: 
     container_name: 'MS-EMAILS'
@@ -17,8 +16,8 @@ services:
     command: npm run dev
     ports:
       - '3001:3001'
-    volumes:
-      - .:/app/ms_emails
+    depends_on:
+      - kafka
     
   ms_client_review:
     container_name: 'MS-CLIENT-REVIEW'
@@ -26,10 +25,9 @@ services:
     command: npm run dev
     ports:
       - '3002:3002'
-    volumes:
-      - .:/app/ms_client_review
     depends_on:
       - mysql
+      - kafka
 
   mysql: 
     container_name: 'MYSQL'

@@ -2,7 +2,7 @@ FROM node:14-alpine
 
 WORKDIR /app/ms_emails
 
-COPY package.json .
+COPY package.json ./
 RUN npm install
 
 COPY . .
