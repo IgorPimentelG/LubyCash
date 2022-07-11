@@ -10,7 +10,7 @@ async function run() {
 	await consumer.subscribe({ topic: 'ms-emails'});
 	await consumer.run({
 		eachMessage: async ({ message }) => {
-			const { to, subject, text } = JSON.parse(message.value.toString()).data;
+			const { to, subject, text } = JSON.parse(message.value.toString());
 			sendEmail(to, subject, text);
 		}
 	});

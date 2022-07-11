@@ -17,6 +17,7 @@ export default class ClientsController {
 				address
 			} = await request.validate(StoreValidator);
 
+			const fisrtName = full_name.split(' ')[0];
 			const client_address = await Address.create(address);
 			const client = await Client.create({
 				fullName: full_name,
@@ -35,11 +36,22 @@ export default class ClientsController {
 					value: JSON.stringify({ client_uuid: client.uuid })
 				}]
 			});
+			await producer.send({
+				topic: 'ms-emails',
+				messages: [{
+					value: JSON.stringify({
+						to: email,
+						subject: 'Luby Cash - Seja Bem Vindo',
+						text:
+              `Olá ${fisrtName}, \n\nSua conta na Luby Cash está em análise. Iremos lhe avisar quando tivemos um resultado.`
+					})
+				}]
+			});
 			await producer.disconnect();
 
+			return response.ok({ message: 'Você receberá um e-mail informando sua avaliação!' });
 		} catch(error) {
-			console.log('TESTE');
-			//return response.badRequest({ message: 'Não foi possível solicitar o cadastro!', error });
+			return response.badRequest({ message: 'Não foi possível solicitar o cadastro!', error });
 		}
 	}
 }

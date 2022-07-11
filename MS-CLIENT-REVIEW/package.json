@@ -7,8 +7,12 @@
     "dev": "nodemon src/app.js"
   },
   "dependencies": {
+    "cpf": "^2.0.1",
+    "dotenv": "^16.0.1",
+    "eslint": "^8.19.0",
     "express": "^4.18.1",
-    "kafkajs": "^2.1.0"
+    "kafkajs": "^2.1.0",
+    "mysql": "^2.18.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.19"
