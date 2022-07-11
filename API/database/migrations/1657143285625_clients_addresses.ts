@@ -9,7 +9,7 @@ export default class extends BaseSchema {
 			table.string('address').notNullable();
 			table.string('city').notNullable();
 			table.string('state').notNullable();
-			table.string('zipcode').notNullable().unique();
+			table.string('zipcode').notNullable();
 			table.timestamp('created_at', { useTz: true });
 			table.timestamp('updated_at', { useTz: true });
 		});

@@ -1,7 +1,7 @@
 import Address from './Address';
 import Hash from '@ioc:Adonis/Core/Hash';
 import { DateTime } from 'luxon';
-import { v4 as uuid } from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 import { Status } from '../../shared/model/enum/status';
 import { BaseModel, beforeCreate, beforeSave, column, hasOne, HasOne } from '@ioc:Adonis/Lucid/Orm';
 
@@ -49,7 +49,7 @@ export default class Client extends BaseModel {
 
   @beforeCreate()
   public static async setUUID(client: Client) {
-  	client.uuid = uuid();
+  	client.uuid = uuidv4();
   }
 
   @beforeSave()
