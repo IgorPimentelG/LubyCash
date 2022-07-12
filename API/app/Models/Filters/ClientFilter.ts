@@ -9,7 +9,13 @@ export default class ClientFilter extends BaseModelFilter {
 		this.$query.where('status', 'LIKE', `%${value}%`);
 	}
 
-	createdAt(date: string) {
+	createdAt(date: string[]) {
 		this.$query.whereBetween('created_at', [date[0], date[1]]);
+	}
+
+	extractCreatedAt(date: string[]) {
+		this.$query.whereHas('extracts', (ExtractModel) => {
+			ExtractModel.whereBetween('created_at', [date[0], date[1]]);
+		});
 	}
 }

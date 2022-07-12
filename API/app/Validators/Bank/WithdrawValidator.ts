@@ -1,7 +1,7 @@
 import { schema, CustomMessages, rules } from '@ioc:Adonis/Core/Validator';
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
 
-export default class PixValidator {
+export default class WithdrawValidator {
 	constructor(protected ctx: HttpContextContract) {}
 
 	/*
@@ -24,11 +24,6 @@ export default class PixValidator {
    *    ```
    */
 	public schema = schema.create({
-		recipient_cpf: schema.string({}, [
-			rules.required(),
-			rules.regex(/(\d{3}).(\d{3}).(\d{3})-(\d{2})/g),
-			rules.exists({ table: 'clients', column: 'cpf_number' }),
-		]),
 		amount: schema.number([
 			rules.required(),
 			rules.unsigned(),

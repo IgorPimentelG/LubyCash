@@ -9,3 +9,11 @@ export type ForgotPasswordEvent = {
   firstName: string;
   token: string;
 }
+
+export type ExtractEvent = {
+  uuid: string;
+  output: number;
+  input: number;
+  balance: number;
+  description: string;
+}

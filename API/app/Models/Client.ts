@@ -6,7 +6,8 @@ import { Status } from '../../shared/model/enum/status';
 import { compose } from '@ioc:Adonis/Core/Helpers';
 import { Filterable } from '@ioc:Adonis/Addons/LucidFilter';
 import ClientFilter from './Filters/ClientFilter';
-import { BaseModel, beforeCreate, beforeSave, column, hasOne, HasOne } from '@ioc:Adonis/Lucid/Orm';
+import { BaseModel, beforeCreate, beforeSave, column, hasMany, HasMany, hasOne, HasOne } from '@ioc:Adonis/Lucid/Orm';
+import Extract from './Extract';
 
 export default class Client extends compose(BaseModel, Filterable) {
 
@@ -43,6 +44,11 @@ export default class Client extends compose(BaseModel, Filterable) {
   	foreignKey: 'client_uuid'
   })
   public address: HasOne<typeof Address>;
+
+  @hasMany(() => Extract, {
+  	foreignKey: 'client_uuid'
+  })
+  public extracts: HasMany<typeof Extract>;
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime;

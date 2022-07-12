@@ -1,6 +1,8 @@
 import Event from '@ioc:Adonis/Core/Event';
+import Client from 'App/Models/Client';
+import Extract from 'App/Models/Extract';
 import { producer } from 'Config/kafka';
-import { ClientRegisterEvent, ForgotPasswordEvent } from 'shared/model/types/events';
+import { ClientRegisterEvent, ForgotPasswordEvent, ExtractEvent } from 'shared/model/types/events';
 
 Event.on('client:register', async (payload: ClientRegisterEvent) => {
 
@@ -47,4 +49,16 @@ Event.on('user:forgot-password', async (payload: ForgotPasswordEvent) => {
 		}]
 	});
 	await producer.disconnect();
+});
+
+Event.on('bank:extract', async (payload: ExtractEvent) => {
+	const { uuid, input, output, balance, description } = payload;
+
+	const client = await Client.findBy('uuid', uuid);
+	await client?.related('extracts').create({
+		input,
+		output,
+		balance,
+		description
+	});
 });
