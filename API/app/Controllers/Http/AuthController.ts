@@ -26,7 +26,6 @@ export default class AuthController {
 			const token = await auth.use('client_api').attempt(payload.email, payload.password, {
 				expiresIn: '1hours'
 			});
-
 			return response.ok({ client, token });
 		} catch {
 			return response.unauthorized({ message: 'Credenciais inválidas!'});
