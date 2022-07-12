@@ -2,7 +2,7 @@ import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
 import Address from 'App/Models/Address';
 import Client from 'App/Models/Client';
 import StoreValidator from 'App/Validators/Client/StoreValidator';
-import { producer } from 'Config/kafka';
+import Event from '@ioc:Adonis/Core/Event';
 
 export default class ClientsController {
 	public async store({ request, response }: HttpContextContract) {
@@ -17,7 +17,6 @@ export default class ClientsController {
 				address
 			} = await request.validate(StoreValidator);
 
-			const fisrtName = full_name.split(' ')[0];
 			const client_address = await Address.create(address);
 			const client = await Client.create({
 				fullName: full_name,
@@ -29,25 +28,11 @@ export default class ClientsController {
 				addressId: client_address.id
 			});
 
-			await producer.connect();
-			await producer.send({
-				topic: 'ms-client-review',
-				messages: [{
-					value: JSON.stringify({ client_uuid: client.uuid })
-				}]
+			Event.emit('user:forgot-password', {
+				email: email,
+				fisrtName: full_name.split(' ')[0],
+				uuid: client.uuid
 			});
-			await producer.send({
-				topic: 'ms-emails',
-				messages: [{
-					value: JSON.stringify({
-						to: email,
-						subject: 'Luby Cash - Seja Bem Vindo',
-						text:
-              `Olá ${fisrtName}, \n\nSua conta na Luby Cash está em análise. Iremos lhe avisar quando tivemos um resultado.`
-					})
-				}]
-			});
-			await producer.disconnect();
 
 			return response.ok({ message: 'Você receberá um e-mail informando sua avaliação!' });
 		} catch(error) {

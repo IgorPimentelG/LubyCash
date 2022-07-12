@@ -21,3 +21,4 @@
 import 'App/modules/auth/routes';
 import 'App/modules/admin/routes';
 import 'App/modules/client/routes';
+import 'App/modules/user/routes';
