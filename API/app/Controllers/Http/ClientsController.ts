@@ -17,7 +17,6 @@ export default class ClientsController {
 				address
 			} = await request.validate(StoreValidator);
 
-			const client_address = await Address.create(address);
 			const client = await Client.create({
 				fullName: full_name,
 				cpfNumber: cpf_number,
@@ -25,8 +24,8 @@ export default class ClientsController {
 				email,
 				password,
 				phone,
-				addressId: client_address.id
 			});
+			await client.related('address').create(address);
 
 			Event.emit('user:forgot-password', {
 				email: email,
@@ -40,12 +39,18 @@ export default class ClientsController {
 		}
 	}
 
-	public async index({ response }: HttpContextContract) {
+	public async index({ request, response }: HttpContextContract) {
+
+		const { ...inputs } = request.qs();
+
 		try {
-			const clients = await Client.all();
+			const clients = await Client.query()
+				.preload('address')
+				.filter(inputs);
 			return response.ok({ clients });
-		} catch {
-			return response.badRequest({ message: 'Não foi possível listar os clientes. '});
+		} catch(error) {
+			console.log(error);
+			return response.badRequest({ message: 'Não foi possível listar os clientes.' });
 		}
 	}
 }

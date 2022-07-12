@@ -3,9 +3,15 @@ import Hash from '@ioc:Adonis/Core/Hash';
 import { DateTime } from 'luxon';
 import { v4 as uuidv4 } from 'uuid';
 import { Status } from '../../shared/model/enum/status';
+import { compose } from '@ioc:Adonis/Core/Helpers';
+import { Filterable } from '@ioc:Adonis/Addons/LucidFilter';
+import ClientFilter from './Filters/ClientFilter';
 import { BaseModel, beforeCreate, beforeSave, column, hasOne, HasOne } from '@ioc:Adonis/Lucid/Orm';
 
-export default class Client extends BaseModel {
+export default class Client extends compose(BaseModel, Filterable) {
+
+	public static $filter = () => ClientFilter;
+
   @column({ isPrimary: true })
 	public uuid: string;
 
