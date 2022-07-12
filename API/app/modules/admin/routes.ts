@@ -6,6 +6,7 @@ Route.group(() => {
 		Route.put('/update/:uuid', 'AdminsController.update');
 		Route.get('/list', 'AdminsController.show');
 		Route.delete('/delete/:uuid', 'AdminsController.destroy');
+		Route.get('/clients', 'ClientsController.index');
 	}).prefix('/v1/admin');
 })
 	.prefix('/api')

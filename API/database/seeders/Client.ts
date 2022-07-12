@@ -7,7 +7,7 @@ export default class extends BaseSeeder {
 		await Address.updateOrCreateMany('zipcode',[
 			{
 				id: 1,
-				address: 'Cataratas do Iguaçu',
+				street: 'Cataratas do Iguaçu',
 				city: 'Manaus',
 				state: 'AM',
 				zipcode: '69098448'

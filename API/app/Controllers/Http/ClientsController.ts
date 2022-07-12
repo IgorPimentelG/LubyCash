@@ -39,4 +39,13 @@ export default class ClientsController {
 			return response.badRequest({ message: 'Não foi possível solicitar o cadastro!', error });
 		}
 	}
+
+	public async index({ response }: HttpContextContract) {
+		try {
+			const clients = await Client.all();
+			return response.ok({ clients });
+		} catch {
+			return response.badRequest({ message: 'Não foi possível listar os clientes. '});
+		}
+	}
 }
