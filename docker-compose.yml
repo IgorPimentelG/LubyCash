@@ -1,33 +1,33 @@
 version: "2"
 services:
-  api:
-    container_name: 'API'
-    build: ./API
-    command: npm run dev
-    ports:
-      - '3333:3333'
-    depends_on:
-      - mysql
-      - kafka
+  # api:
+  #   container_name: 'API'
+  #   build: ./API
+  #   command: node ace serve --watch
+  #   ports:
+  #     - '3333:3333'
+  #   depends_on:
+  #     - mysql
+  #     - kafka
   
-  ms_emails: 
-    container_name: 'MS-EMAILS'
-    build: ./MS-EMAILS
-    command: npm run dev
-    ports:
-      - '3001:3001'
-    depends_on:
-      - kafka
+  # ms_emails: 
+  #   container_name: 'MS-EMAILS'
+  #   build: ./MS-EMAILS
+  #   command: npm run dev
+  #   ports:
+  #     - '3001:3001'
+  #   depends_on:
+  #     - kafka
     
-  ms_client_review:
-    container_name: 'MS-CLIENT-REVIEW'
-    build: ./MS-CLIENT-REVIEW
-    command: npm run dev
-    ports:
-      - '3002:3002'
-    depends_on:
-      - mysql
-      - kafka
+  # ms_client_review:
+  #   container_name: 'MS-CLIENT-REVIEW'
+  #   build: ./MS-CLIENT-REVIEW
+  #   command: npm run dev
+  #   ports:
+  #     - '3002:3002'
+  #   depends_on:
+  #     - mysql
+  #     - kafka
 
   mysql: 
     container_name: 'MYSQL'

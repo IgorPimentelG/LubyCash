@@ -10,4 +10,4 @@ Route.group(() => {
 	}).prefix('/v1/admin');
 })
 	.prefix('/api')
-	.middleware(['auth', 'adminOnly']);
+	.middleware(['auth:admin_api', 'adminOnly']);

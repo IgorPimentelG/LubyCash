@@ -9,4 +9,4 @@ COPY . .
 
 EXPOSE 3333
 
-CMD ["npm", "run", "dev"]
+CMD ["node", "ace", "serve", "--watch"]
