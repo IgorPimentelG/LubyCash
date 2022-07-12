@@ -1,5 +1,4 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
-import Address from 'App/Models/Address';
 import Client from 'App/Models/Client';
 import StoreValidator from 'App/Validators/Client/StoreValidator';
 import Event from '@ioc:Adonis/Core/Event';
@@ -27,7 +26,7 @@ export default class ClientsController {
 			});
 			await client.related('address').create(address);
 
-			Event.emit('user:forgot-password', {
+			Event.emit('client:register', {
 				email: email,
 				fisrtName: full_name.split(' ')[0],
 				uuid: client.uuid
@@ -48,8 +47,7 @@ export default class ClientsController {
 				.preload('address')
 				.filter(inputs);
 			return response.ok({ clients });
-		} catch(error) {
-			console.log(error);
+		} catch {
 			return response.badRequest({ message: 'Não foi possível listar os clientes.' });
 		}
 	}

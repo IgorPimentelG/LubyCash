@@ -1,5 +1,6 @@
+import Client from 'App/Models/Client';
 import { DateTime } from 'luxon';
-import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm';
+import { BaseModel, belongsTo, column, BelongsTo } from '@ioc:Adonis/Lucid/Orm';
 
 export default class Address extends BaseModel {
 	public static table = 'clients_addresses';
@@ -19,9 +20,15 @@ export default class Address extends BaseModel {
   @column()
   public zipcode: string;
 
+  @column()
+  public client_uuid: string;
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime;
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime;
+
+  @belongsTo(() => Client)
+  public user: BelongsTo<typeof Client>;
 }

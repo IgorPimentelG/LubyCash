@@ -39,11 +39,8 @@ export default class Client extends compose(BaseModel, Filterable) {
   @column()
   public status: Status;
 
-  @column()
-  public addressId: number;
-
   @hasOne(() => Address, {
-  	foreignKey: 'addressId'
+  	foreignKey: 'client_uuid'
   })
   public address: HasOne<typeof Address>;
 

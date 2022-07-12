@@ -3,7 +3,6 @@ const nodemailer = require('nodemailer');
 const configEmail = require('./mail');
 const consumer = require('./kafka');
 const hbs = require('nodemailer-express-handlebars');
-const path = require('path');
 
 const PORT = 3001;
 const transporter = nodemailer.createTransport(configEmail);

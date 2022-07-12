@@ -33,8 +33,9 @@ async function run() {
 					value: JSON.stringify({
 						to: user.email,
 						subject: 'Luby Cash - Resultado da sua avaliação',
-						text:
-							`Olá ${fisrtName}, \n\nSua conta na Luby Cash foi ${status === 'approved' ? 'aprovada :)' : 'reprovada :('}`
+						fisrtName: fisrtName,
+						template: 'client_status',
+						data: `Sua conta na Luby Cash foi ${status === 'approved' ? 'aprovada :)' : 'reprovada :('}`
 					})
 				}]
 			});

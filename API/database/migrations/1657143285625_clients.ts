@@ -14,11 +14,6 @@ export default class extends BaseSchema {
 			table.float('current_balance').defaultTo(0);
 			table.float('average_salary').defaultTo(0);
 			table.enum('status', ['approved', 'disapproved', 'analysis']).defaultTo('analysis');
-			table.integer('address_id')
-				.unsigned()
-				.references('id')
-				.inTable('clients_addresses').onDelete('CASCADE')
-				.notNullable();
 			table.timestamp('created_at', { useTz: true });
 			table.timestamp('updated_at', { useTz: true });
 		});
